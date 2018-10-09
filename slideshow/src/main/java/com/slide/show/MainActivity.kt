@@ -2,12 +2,10 @@ package com.slide.show
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.facebook.drawee.view.SimpleDraweeView
@@ -23,7 +21,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         requestPermission(object : PermissionCallBack() {
             override fun onGranted() {
-                var imageFile = FileUtil.getFilePath(Constant.IMAGE_NAME)
+                val imageFile = FileUtil.getFilePath(Constant.IMAGE_NAME)
                 var listFiles = imageFile.listFiles()
                 if (listFiles.isEmpty()) {
                     FileUtil.copyAssetsToSD("slideshow", imageFile.absolutePath).setFileOperateCallback(object : FileOperateCallback {
@@ -58,11 +56,8 @@ class MainActivity : BaseActivity() {
 
             override fun onPageSelected(position: Int) {
                 if (position == 1) {
-                    Log.d("tang", "textView == null")
                     view = View(this@MainActivity)
-                    view!!.setBackgroundColor(Color.RED)
                     view!!.setOnClickListener {
-                        Log.d("tang", "点击")
                         if (count == 0) {
                             xb_slide_show.postDelayed({
                                 count = 0
@@ -79,7 +74,6 @@ class MainActivity : BaseActivity() {
                     xb_slide_show.removeView(view)
                     view = null
                 }
-                Log.d("tang", "点击:${xb_slide_show.childCount}")
             }
         })
     }
@@ -94,7 +88,6 @@ class MainActivity : BaseActivity() {
                 .sortedBy {
                     it.name.length
                 }
-        //添加轮播图片数据（图片数据不局限于网络图片、本地资源文件、View 都可以）,刷新数据也是调用该方法
         showImage(imageList)
     }
 
